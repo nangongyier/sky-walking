@@ -9,13 +9,14 @@ import cn.tongdun.config.spring.ConfigRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.Properties;
 
 @Service
+@Configuration
 public class ShutterConfig implements ConfigChangeListener{
 //    @PostConstruct
 //    public void init() throws Exception {
@@ -23,7 +24,7 @@ public class ShutterConfig implements ConfigChangeListener{
 //    }
     private final static Logger logger = LoggerFactory.getLogger(ShutterConfig.class);
 
-    @Resource
+    @Autowired
     private ConfigRepository repository;
 
     private String traceSwitch;
@@ -59,6 +60,6 @@ public class ShutterConfig implements ConfigChangeListener{
 
         ConfigClient client = repository.getClient();
         Properties properties = client.file().getProperties(metadata,this);
-        logger.info("shutter file change : app={}, env={}, group={}, new propertes={}", metadata.getApp(), metadata.getEnv(), metadata.getGroup(), PropertiesUtils.dump(properties));
+        logger.info("======================shutter file change : app={}, env={}, group={}, new propertes={}", metadata.getApp(), metadata.getEnv(), metadata.getGroup(), PropertiesUtils.dump(properties));
     }
 }
